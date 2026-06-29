@@ -1,137 +1,895 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mistérios da Lua - Carta Celeste Completa</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700&display=swap');
-        
-        body {
-            margin: 0;
-            padding: 0;
-            background: radial-gradient(circle at bottom, #111a24 0%, #050608 100%);
-            color: #e0e0e0;
-            font-family: 'Montserrat', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .container {
-            max-width: 600px;
-            width: 90%;
-            padding: 40px 0;
-            text-align: center;
-            z-index: 10;
-        }
+<title>Mistérios da Lua - Ricardo Zibordi</title>
 
-        h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            color: #ffffff;
-            text-shadow: 0 0 15px rgba(255,255,255,0.4);
-            margin-bottom: 5px;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-        .date-container { margin-bottom: 30px; }
-        .date { font-size: 1rem; color: #a0a0a0; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-        .time { font-size: 1.2rem; color: #d4af37; font-weight: 300; letter-spacing: 2px; font-family: 'Cinzel', serif; }
-        
-        .phase-title {
-            font-size: 1.8rem;
-            color: #d4af37;
-            font-weight: 700;
-            margin-bottom: 25px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
-        }
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-        .moon-container {
-            margin: 0 auto 30px auto;
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            position: relative;
-            background: #fdfdfd;
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
-            overflow: hidden;
-        }
-        
-        .moon-craters { position: absolute; width: 100%; height: 100%; border-radius: 50%; background-image: radial-gradient(circle at 30% 30%, rgba(0,0,0,0.15) 0%, transparent 20%), radial-gradient(circle at 70% 60%, rgba(0,0,0,0.2) 0%, transparent 30%), radial-gradient(circle at 40% 80%, rgba(0,0,0,0.15) 0%, transparent 15%); z-index: 2; }
-        .moon-shadow { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 50%; z-index: 3; }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.8.0/suncalc.min.js"></script>
 
-        .stats-container { display: flex; justify-content: space-between; width: 100%; margin-bottom: 20px; gap: 10px; }
-        .stat-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 15px 5px; flex: 1; text-align: center; backdrop-filter: blur(10px); }
-        .stat-value { display: block; font-size: 1.15rem; color: #d4af37; font-weight: 700; margin-bottom: 5px; font-family: 'Cinzel', serif; }
-        .stat-label { display: block; font-size: 0.65rem; color: #b0b0b0; text-transform: uppercase; letter-spacing: 1px; }
+<style>
+:root {
+    --bg: #050608;
+    --gold: #d4af37;
+    --gold-soft: rgba(212, 175, 55, 0.25);
+    --text: #f1f1f1;
+    --muted: #9b9b9b;
+    --glass: rgba(255, 255, 255, 0.065);
+    --line: rgba(255, 255, 255, 0.13);
+}
 
-        .card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px; margin-bottom: 20px; backdrop-filter: blur(10px); text-align: left; }
-        .card h2 { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 10px; margin-bottom: 15px; }
-        
-        .map-wrapper { width: 100%; height: 350px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.2); margin-top: 10px; }
-        .author { margin-top: 40px; font-size: 0.85rem; color: #777; letter-spacing: 1.5px; text-transform: uppercase; }
-        
-        .stars { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; pointer-events: none; background-image: radial-gradient(1px 1px at 20px 30px, #eee, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)); background-repeat: repeat; opacity: 0.5; }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.8.0/suncalc.min.js"></script>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at top, rgba(212,175,55,0.11), transparent 28%),
+        radial-gradient(circle at 15% 18%, rgba(120,150,255,0.09), transparent 24%),
+        radial-gradient(circle at 85% 75%, rgba(212,175,55,0.08), transparent 24%),
+        linear-gradient(180deg, #02030a 0%, #050608 55%, #090a10 100%);
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1.4px),
+        radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1.4px);
+    background-size: 72px 72px, 110px 110px;
+    background-position: 0 0, 28px 34px;
+    opacity: 0.22;
+}
+
+.app {
+    position: relative;
+    width: min(100%, 540px);
+    margin: 0 auto;
+    padding: 22px 16px 28px;
+}
+
+.header {
+    padding: 16px 10px 8px;
+    text-align: center;
+}
+
+.kicker {
+    margin-bottom: 8px;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+
+h1 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 9vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.subtitle {
+    margin: 12px auto 0;
+    max-width: 360px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--muted);
+}
+
+.card {
+    margin-top: 18px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.035));
+    backdrop-filter: blur(16px);
+    box-shadow:
+        0 24px 70px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.09);
+}
+
+.phase-name {
+    margin-top: 4px;
+    text-align: center;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.moon-stage {
+    display: grid;
+    place-items: center;
+    margin: 16px 0 8px;
+}
+
+#moonCanvas {
+    width: 220px;
+    height: 220px;
+    max-width: 70vw;
+    filter:
+        drop-shadow(0 0 24px rgba(255,255,255,0.13))
+        drop-shadow(0 0 62px rgba(212,175,55,0.08));
+}
+
+.main-number {
+    margin-top: 4px;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    color: var(--text);
+}
+
+.main-label {
+    text-align: center;
+    margin-top: 2px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.stat {
+    min-height: 84px;
+    padding: 13px 8px;
+    border-radius: 18px;
+    border: 1px solid rgba(212,175,55,0.23);
+    background: rgba(0,0,0,0.22);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.61rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.stat-value {
+    display: block;
+    margin-top: 8px;
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: var(--gold);
+    word-break: break-word;
+}
+
+.astro-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.astro-box {
+    padding: 14px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.045);
+}
+
+.astro-label {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.astro-value {
+    display: block;
+    margin-top: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.next-phase {
+    margin-top: 12px;
+    padding: 15px;
+    border-radius: 22px;
+    border: 1px solid rgba(212,175,55,0.25);
+    background:
+        radial-gradient(circle at top left, rgba(212,175,55,0.15), transparent 35%),
+        rgba(0,0,0,0.24);
+}
+
+.next-phase small {
+    display: block;
+    font-size: 0.64rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.next-phase strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 1.05rem;
+    color: var(--gold);
+}
+
+.next-phase span {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.82rem;
+    color: var(--text);
+}
+
+.details {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 12px 2px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.83rem;
+}
+
+.detail-row span:first-child {
+    color: var(--muted);
+}
+
+.detail-row span:last-child {
+    color: var(--text);
+    text-align: right;
+}
+
+.note {
+    margin-top: 12px;
+    font-size: 0.76rem;
+    line-height: 1.5;
+    color: #8d8d8d;
+}
+
+.map-card {
+    margin-top: 16px;
+    overflow: hidden;
+    border-radius: 24px;
+    border: 1px solid var(--line);
+    background: #000;
+}
+
+.map-title {
+    padding: 13px 14px;
+    font-size: 0.76rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(255,255,255,0.045);
+}
+
+iframe {
+    display: block;
+    width: 100%;
+    height: 320px;
+    border: 0;
+    background: #000;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+button {
+    flex: 1;
+    border: 1px solid var(--gold-soft);
+    border-radius: 999px;
+    padding: 12px 14px;
+    color: var(--text);
+    background: rgba(212,175,55,0.08);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.author {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 0.72rem;
+    color: #626262;
+}
+
+@media (max-width: 420px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .astro-grid {
+        grid-template-columns: 1fr;
+    }
+
+    iframe {
+        height: 280px;
+    }
+}
+
+@media (max-width: 340px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 </head>
+
 <body>
-    <div class="stars"></div>
-    <div class="container">
+
+<main class="app">
+
+    <section class="header">
+        <div class="kicker">Mistérios da Lua</div>
+
         <h1>Fase Lunar</h1>
-        <div class="date-container">
-            <div class="date" id="data-atual">Carregando...</div>
-            <div class="time" id="hora-atual">--:--:--</div>
+
+        <p class="subtitle">
+            Uma leitura astronômica simples da Lua neste instante, com fase,
+            iluminação, constelação aparente e horários do céu.
+        </p>
+    </section>
+
+    <section class="card">
+
+        <div id="fase-nome" class="phase-name">Calculando...</div>
+
+        <div class="moon-stage">
+            <canvas id="moonCanvas" width="220" height="220"></canvas>
         </div>
 
-        <div class="phase-title" id="fase-titulo">...</div>
-        
-        <div class="moon-container" id="moon-base">
-            <div class="moon-craters"></div>
-            <div class="moon-shadow" id="moon-shadow"></div>
-        </div>
+        <div id="val-luz-grande" class="main-number">--%</div>
+        <div class="main-label">iluminação lunar agora</div>
 
-        <div class="stats-container">
-            <div class="stat-box"><span class="stat-value" id="luminosidade">--%</span><span class="stat-label">Luz</span></div>
-            <div class="stat-box"><span class="stat-value" id="distancia">--</span><span class="stat-label">Distância</span></div>
-            <div class="stat-box"><span class="stat-value" id="constelacao">--</span><span class="stat-label">Constelação</span></div>
-        </div>
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-label">Hora local</span>
+                <span class="stat-value" id="val-hora">--:--</span>
+            </div>
 
-        <div class="card">
-            <h2>Carta Celeste com Referências</h2>
-            <p style="font-size: 0.85rem; color: #b0b0b0;">Linhas adicionadas: <strong>Eclíptica</strong> (caminho aparente do Sol) e <strong>Equador Celeste</strong>.</p>
-            <div class="map-wrapper">
-                <iframe id="sky-map" width="100%" height="350" frameborder="0" src=""></iframe>
+            <div class="stat">
+                <span class="stat-label">Distância</span>
+                <span class="stat-value" id="val-dist">--</span>
+            </div>
+
+            <div class="stat">
+                <span class="stat-label">Constelação</span>
+                <span class="stat-value" id="val-cons">--</span>
+            </div>
+
+            <div class="stat">
+                <span class="stat-label">Altitude</span>
+                <span class="stat-value" id="val-alt">--</span>
+            </div>
+
+            <div class="stat">
+                <span class="stat-label">Azimute</span>
+                <span class="stat-value" id="val-az">--</span>
+            </div>
+
+            <div class="stat">
+                <span class="stat-label">Luz</span>
+                <span class="stat-value" id="val-luz-card">--%</span>
             </div>
         </div>
 
-        <div class="author">Desenvolvimento: Ricardo Zibordi</div>
-    </div>
+        <div class="astro-grid">
+            <div class="astro-box">
+                <span class="astro-label">Nascer do Sol</span>
+                <span class="astro-value" id="val-sol-nascer">--:--</span>
+            </div>
 
-    <script>
-        let lat = -22.9071; let lng = -47.0608;
+            <div class="astro-box">
+                <span class="astro-label">Nascer da Lua</span>
+                <span class="astro-value" id="val-lua-nascer">--:--</span>
+            </div>
 
-        function atualizarCartaCeleste() {
-            const iframe = document.getElementById('sky-map');
-            // eclipitc=true e equator=true ativam as linhas guia
-            const url = `https://virtualsky.lco.global/embed/index.html?longitude=${lng}&latitude=${lat}&projection=stereo&showplanets=true&showmoon=true&constellations=true&constellationlabels=true&ecliptic=true&equator=true&live=true&bgcolor=050608&color=e0e0e0`;
-            iframe.src = url;
+            <div class="astro-box">
+                <span class="astro-label">Ocaso da Lua</span>
+                <span class="astro-value" id="val-lua-ocaso">--:--</span>
+            </div>
+
+            <div class="astro-box">
+                <span class="astro-label">Local</span>
+                <span class="astro-value" id="val-local-curto">Campinas</span>
+            </div>
+        </div>
+
+        <div class="next-phase">
+            <small>Próxima fase principal</small>
+            <strong id="val-prox-fase">--</strong>
+            <span id="val-prox-fase-data">--</span>
+        </div>
+
+        <div class="details">
+            <div class="detail-row">
+                <span>Longitude eclíptica da Lua</span>
+                <span id="val-lon">--</span>
+            </div>
+
+            <div class="detail-row">
+                <span>Local usado</span>
+                <span id="val-local">Campinas-SP padrão</span>
+            </div>
+
+            <div class="detail-row">
+                <span>Atualizado em</span>
+                <span id="val-data">--</span>
+            </div>
+        </div>
+
+        <p class="note">
+            A constelação é calculada por longitude eclíptica geocêntrica aproximada.
+            A próxima fase também é estimada por cálculo numérico; próximo das fronteiras
+            e dos instantes exatos, softwares astronômicos profissionais podem apresentar
+            pequena diferença.
+        </p>
+
+        <div class="actions">
+            <button onclick="pedirLocalizacao()">Usar meu local</button>
+            <button onclick="atualizar()">Atualizar</button>
+        </div>
+
+    </section>
+
+    <section class="map-card">
+        <div class="map-title">Mapa do céu ao vivo</div>
+        <iframe id="sky-map" src=""></iframe>
+    </section>
+
+    <div class="author">Autoria: Ricardo Zibordi</div>
+
+</main>
+
+<script>
+let lat = -22.9071;
+let lng = -47.0608;
+let localDescricao = "Campinas-SP padrão";
+let localCurto = "Campinas";
+
+const DIA_MS = 86400000;
+const HORA_MS = 3600000;
+const MINUTO_MS = 60000;
+const MES_SINODICO = 29.530588853;
+
+function normalizarGraus(x) {
+    return ((x % 360) + 360) % 360;
+}
+
+function rad(graus) {
+    return graus * Math.PI / 180;
+}
+
+function graus(x) {
+    return x * 180 / Math.PI;
+}
+
+function diasDesdeJ2000(data) {
+    return data.getTime() / DIA_MS - 10957.5;
+}
+
+function formatarHora(data) {
+    if (!data || isNaN(data.getTime())) return "Não ocorre hoje";
+
+    return data.toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
+function formatarDataHora(data) {
+    if (!data || isNaN(data.getTime())) return "--";
+
+    return data.toLocaleString("pt-BR", {
+        weekday: "short",
+        day: "2-digit",
+        month: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
+function longitudeEclipticaLua(data) {
+    const d = diasDesdeJ2000(data);
+
+    const L  = normalizarGraus(218.316 + 13.176396 * d);
+    const Mm = normalizarGraus(134.963 + 13.064993 * d);
+    const Ms = normalizarGraus(357.529 + 0.98560028 * d);
+    const D  = normalizarGraus(297.850 + 12.190749 * d);
+    const F  = normalizarGraus(93.272 + 13.229350 * d);
+
+    let lon = L
+        + 6.289 * Math.sin(rad(Mm))
+        + 1.274 * Math.sin(rad(2 * D - Mm))
+        + 0.658 * Math.sin(rad(2 * D))
+        + 0.214 * Math.sin(rad(2 * Mm))
+        - 0.186 * Math.sin(rad(Ms))
+        - 0.059 * Math.sin(rad(2 * D - 2 * Mm))
+        - 0.057 * Math.sin(rad(2 * D - Ms - Mm))
+        + 0.053 * Math.sin(rad(2 * D + Mm))
+        + 0.046 * Math.sin(rad(2 * D - Ms))
+        + 0.041 * Math.sin(rad(Ms - Mm))
+        - 0.035 * Math.sin(rad(D))
+        - 0.031 * Math.sin(rad(Ms + Mm))
+        - 0.015 * Math.sin(rad(2 * F - 2 * D))
+        + 0.011 * Math.sin(rad(2 * D - 4 * Mm));
+
+    return normalizarGraus(lon);
+}
+
+function constelacaoZodiacal(lon) {
+    const faixas = [
+        { nome: "Peixes",       ini: 351.38, fim: 360.00 },
+        { nome: "Peixes",       ini: 0.00,   fim: 28.94  },
+        { nome: "Áries",        ini: 28.94,  fim: 53.84  },
+        { nome: "Touro",        ini: 53.84,  fim: 90.38  },
+        { nome: "Gêmeos",       ini: 90.38,  fim: 118.01 },
+        { nome: "Câncer",       ini: 118.01, fim: 138.05 },
+        { nome: "Leão",         ini: 138.05, fim: 173.85 },
+        { nome: "Virgem",       ini: 173.85, fim: 217.80 },
+        { nome: "Libra",        ini: 217.80, fim: 241.13 },
+        { nome: "Escorpião",    ini: 241.13, fim: 247.97 },
+        { nome: "Ofiúco",       ini: 247.97, fim: 266.40 },
+        { nome: "Sagitário",    ini: 266.40, fim: 299.17 },
+        { nome: "Capricórnio",  ini: 299.17, fim: 327.77 },
+        { nome: "Aquário",      ini: 327.77, fim: 351.38 }
+    ];
+
+    return faixas.find(f => lon >= f.ini && lon < f.fim)?.nome || "Indefinida";
+}
+
+function nomeFase(phase, fraction) {
+    if (fraction < 0.025) return "Lua Nova";
+    if (fraction > 0.975) return "Lua Cheia";
+
+    if (phase < 0.22) return "Lua Crescente";
+    if (phase < 0.28) return "Quarto Crescente";
+    if (phase < 0.47) return "Gibosa Crescente";
+    if (phase < 0.53) return "Lua Cheia";
+    if (phase < 0.72) return "Gibosa Minguante";
+    if (phase < 0.78) return "Quarto Minguante";
+
+    return "Lua Minguante";
+}
+
+function faseValor(data) {
+    return SunCalc.getMoonIllumination(data).phase;
+}
+
+function cruzouFase(p1, p2, alvo) {
+    if (alvo === 1) {
+        return p1 > 0.85 && p2 < 0.15;
+    }
+
+    return p1 < alvo && p2 >= alvo;
+}
+
+function proximaFasePrincipal(agora) {
+    const faseAtual = faseValor(agora);
+
+    const alvos = [
+        { nome: "Quarto Crescente", valor: 0.25 },
+        { nome: "Lua Cheia", valor: 0.50 },
+        { nome: "Quarto Minguante", valor: 0.75 },
+        { nome: "Lua Nova", valor: 1.00 }
+    ];
+
+    let candidatos = alvos.map(alvo => {
+        let delta = alvo.valor - faseAtual;
+
+        if (delta <= 0) delta += 1;
+
+        return {
+            nome: alvo.nome,
+            valor: alvo.valor,
+            estimativa: new Date(agora.getTime() + delta * MES_SINODICO * DIA_MS)
+        };
+    });
+
+    candidatos.sort((a, b) => a.estimativa - b.estimativa);
+
+    const escolhido = candidatos[0];
+
+    let inicio = new Date(escolhido.estimativa.getTime() - 36 * HORA_MS);
+    let fim = new Date(escolhido.estimativa.getTime() + 36 * HORA_MS);
+
+    let anteriorData = inicio;
+    let anteriorFase = faseValor(anteriorData);
+    let bracketInicio = null;
+    let bracketFim = null;
+
+    for (let t = inicio.getTime() + 10 * MINUTO_MS; t <= fim.getTime(); t += 10 * MINUTO_MS) {
+        const atualData = new Date(t);
+        const atualFase = faseValor(atualData);
+
+        if (cruzouFase(anteriorFase, atualFase, escolhido.valor)) {
+            bracketInicio = anteriorData;
+            bracketFim = atualData;
+            break;
         }
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((p) => { lat = p.coords.latitude; lng = p.coords.longitude; atualizarCartaCeleste(); }, () => atualizarCartaCeleste());
-        } else { atualizarCartaCeleste(); }
+        anteriorData = atualData;
+        anteriorFase = atualFase;
+    }
 
-        // [Scripts de cálculo de fase e constelação mantidos para funcionamento...]
-        setInterval(() => {
-            document.getElementById("data-atual").textContent = new Date().toLocaleDateString('pt-BR');
-            document.getElementById("hora-atual").textContent = new Date().toLocaleTimeString('pt-BR');
-        }, 1000);
-    </script>
+    if (!bracketInicio || !bracketFim) {
+        return {
+            nome: escolhido.nome,
+            data: escolhido.estimativa
+        };
+    }
+
+    let lo = bracketInicio;
+    let hi = bracketFim;
+
+    for (let i = 0; i < 28; i++) {
+        const meio = new Date((lo.getTime() + hi.getTime()) / 2);
+
+        const pLo = faseValor(lo);
+        const pMeio = faseValor(meio);
+
+        if (cruzouFase(pLo, pMeio, escolhido.valor)) {
+            hi = meio;
+        } else {
+            lo = meio;
+        }
+    }
+
+    return {
+        nome: escolhido.nome,
+        data: hi
+    };
+}
+
+function desenharLua(phase) {
+    const canvas = document.getElementById("moonCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const w = canvas.width;
+    const h = canvas.height;
+    const cx = w / 2;
+    const cy = h / 2;
+    const R = 100;
+
+    ctx.clearRect(0, 0, w, h);
+
+    const img = ctx.createImageData(w, h);
+    const pixels = img.data;
+
+    const alpha = 2 * Math.PI * (phase - 0.5);
+    const flip = lat < 0 ? 1 : -1;
+
+    const sx = Math.sin(alpha) * flip;
+    const sz = Math.cos(alpha);
+
+    for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+            const nx = (x - cx) / R;
+            const ny = (y - cy) / R;
+            const r2 = nx * nx + ny * ny;
+            const i = (y * w + x) * 4;
+
+            if (r2 <= 1) {
+                const nz = Math.sqrt(1 - r2);
+                const dot = nx * sx + nz * sz;
+
+                const limb = 0.72 + 0.28 * nz;
+                let base;
+
+                if (dot > 0) {
+                    base = 155 + 85 * Math.min(dot, 1);
+                } else {
+                    base = 22 + 28 * nz;
+                }
+
+                base *= limb;
+
+                pixels[i]     = base;
+                pixels[i + 1] = base;
+                pixels[i + 2] = base * 1.02;
+                pixels[i + 3] = 255;
+            }
+        }
+    }
+
+    ctx.putImageData(img, 0, 0);
+
+    ctx.save();
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.clip();
+
+    const crateras = [
+        [78, 72, 10, 0.18],
+        [134, 64, 7, 0.14],
+        [150, 104, 13, 0.13],
+        [91, 124, 14, 0.12],
+        [127, 149, 8, 0.12],
+        [63, 147, 6, 0.11],
+        [166, 154, 5, 0.10]
+    ];
+
+    crateras.forEach(c => {
+        const [x, y, r, a] = c;
+
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0,0,0,${a})`;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(x - r * 0.25, y - r * 0.25, r * 0.55, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${a * 0.45})`;
+        ctx.fill();
+    });
+
+    ctx.restore();
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "rgba(255,255,255,0.18)";
+    ctx.stroke();
+}
+
+function atualizarMapa() {
+    const mapa = document.getElementById("sky-map");
+
+    mapa.src =
+        `https://virtualsky.lco.global/embed/index.html` +
+        `?longitude=${lng}` +
+        `&latitude=${lat}` +
+        `&live=true` +
+        `&ecliptic=true` +
+        `&equator=true` +
+        `&showstarlabels=true` +
+        `&showplanets=true` +
+        `&projection=stereo` +
+        `&bgcolor=050608` +
+        `&color=e8e8e8`;
+}
+
+function atualizar() {
+    if (typeof SunCalc === "undefined") {
+        document.getElementById("fase-nome").textContent = "Erro ao carregar dados lunares";
+        return;
+    }
+
+    const agora = new Date();
+
+    const illu = SunCalc.getMoonIllumination(agora);
+    const pos = SunCalc.getMoonPosition(agora, lat, lng);
+
+    const temposSol = SunCalc.getTimes(agora, lat, lng);
+    const temposLua = SunCalc.getMoonTimes(agora, lat, lng);
+
+    const proxima = proximaFasePrincipal(agora);
+
+    const fracao = illu.fraction;
+    const fase = illu.phase;
+
+    const lonLua = longitudeEclipticaLua(agora);
+    const constelacao = constelacaoZodiacal(lonLua);
+
+    const iluminacaoTexto = Math.round(fracao * 100) + "%";
+
+    document.getElementById("fase-nome").textContent = nomeFase(fase, fracao);
+
+    document.getElementById("val-luz-grande").textContent = iluminacaoTexto;
+    document.getElementById("val-luz-card").textContent = iluminacaoTexto;
+
+    document.getElementById("val-hora").textContent = formatarHora(agora);
+
+    document.getElementById("val-dist").textContent =
+        Math.round(pos.distance / 1000) + " mil km";
+
+    document.getElementById("val-cons").textContent = constelacao;
+
+    document.getElementById("val-alt").textContent =
+        graus(pos.altitude).toFixed(1).replace(".", ",") + "°";
+
+    document.getElementById("val-az").textContent =
+        normalizarGraus(graus(pos.azimuth) + 180).toFixed(0) + "°";
+
+    document.getElementById("val-sol-nascer").textContent =
+        formatarHora(temposSol.sunrise);
+
+    document.getElementById("val-lua-nascer").textContent =
+        temposLua.alwaysUp ? "Sempre visível" :
+        temposLua.alwaysDown ? "Não nasce hoje" :
+        formatarHora(temposLua.rise);
+
+    document.getElementById("val-lua-ocaso").textContent =
+        temposLua.alwaysUp ? "Sempre visível" :
+        temposLua.alwaysDown ? "Não visível hoje" :
+        formatarHora(temposLua.set);
+
+    document.getElementById("val-prox-fase").textContent = proxima.nome;
+    document.getElementById("val-prox-fase-data").textContent = formatarDataHora(proxima.data);
+
+    document.getElementById("val-lon").textContent =
+        lonLua.toFixed(2).replace(".", ",") + "°";
+
+    document.getElementById("val-local").textContent = localDescricao;
+    document.getElementById("val-local-curto").textContent = localCurto;
+
+    document.getElementById("val-data").textContent =
+        agora.toLocaleString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+
+    desenharLua(fase);
+    atualizarMapa();
+}
+
+function pedirLocalizacao() {
+    if (!navigator.geolocation) {
+        localDescricao = "Geolocalização indisponível";
+        localCurto = "Indisponível";
+        atualizar();
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        p => {
+            lat = p.coords.latitude;
+            lng = p.coords.longitude;
+
+            localDescricao = `${lat.toFixed(3)}, ${lng.toFixed(3)}`;
+            localCurto = "Meu local";
+
+            atualizar();
+        },
+        () => {
+            localDescricao = "Campinas-SP padrão";
+            localCurto = "Campinas";
+            atualizar();
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 8000,
+            maximumAge: 600000
+        }
+    );
+}
+
+atualizar();
+
+setInterval(atualizar, 60000);
+</script>
+
 </body>
 </html>
