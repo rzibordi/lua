@@ -9,23 +9,34 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.8.0/suncalc.min.js"></script>
 
 <style>
 :root {
-    --bg: #050608;
+    --bg: #03040a;
+    --bg2: #090b14;
+    --card: rgba(255, 255, 255, 0.075);
+    --card2: rgba(255, 255, 255, 0.045);
+    --text: #f4f1ea;
+    --muted: #9d9a94;
+    --muted2: #706d69;
     --gold: #d4af37;
-    --gold-soft: rgba(212, 175, 55, 0.25);
-    --text: #f1f1f1;
-    --muted: #9b9b9b;
-    --glass: rgba(255, 255, 255, 0.065);
-    --line: rgba(255, 255, 255, 0.13);
+    --gold2: #f1d878;
+    --blue: #9cb7ff;
+    --line: rgba(255,255,255,0.13);
+    --line-gold: rgba(212,175,55,0.28);
+    --shadow: 0 28px 80px rgba(0,0,0,0.55);
 }
 
 * {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -34,42 +45,119 @@ body {
     font-family: 'Montserrat', sans-serif;
     color: var(--text);
     background:
-        radial-gradient(circle at top, rgba(212,175,55,0.11), transparent 28%),
-        radial-gradient(circle at 15% 18%, rgba(120,150,255,0.09), transparent 24%),
-        radial-gradient(circle at 85% 75%, rgba(212,175,55,0.08), transparent 24%),
-        linear-gradient(180deg, #02030a 0%, #050608 55%, #090a10 100%);
+        radial-gradient(circle at 50% -10%, rgba(212,175,55,0.20), transparent 28%),
+        radial-gradient(circle at 16% 20%, rgba(156,183,255,0.15), transparent 24%),
+        radial-gradient(circle at 90% 70%, rgba(212,175,55,0.11), transparent 22%),
+        linear-gradient(180deg, #02030a 0%, #050611 48%, #090a10 100%);
     overflow-x: hidden;
 }
 
-body::before {
+body::before,
+body::after {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
+    z-index: 0;
+}
+
+body::before {
     background-image:
-        radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1.4px),
+        radial-gradient(circle, rgba(255,255,255,0.75) 1px, transparent 1.5px),
         radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1.4px);
-    background-size: 72px 72px, 110px 110px;
-    background-position: 0 0, 28px 34px;
-    opacity: 0.22;
+    background-size: 74px 74px, 118px 118px;
+    background-position: 0 0, 32px 42px;
+    opacity: 0.26;
+}
+
+body::after {
+    background:
+        linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.05) 38%, transparent 62%),
+        radial-gradient(circle at 50% 20%, rgba(255,255,255,0.05), transparent 34%);
+    opacity: 0.8;
 }
 
 .app {
     position: relative;
-    width: min(100%, 540px);
+    z-index: 1;
+    width: min(100%, 560px);
     margin: 0 auto;
-    padding: 22px 16px 28px;
+    padding: 18px 14px 34px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.045);
+    backdrop-filter: blur(14px);
+}
+
+.brand {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold2);
+    white-space: nowrap;
+}
+
+.live-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.72rem;
+    color: var(--muted);
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 14px rgba(212,175,55,0.9);
+}
+
+.hero {
+    position: relative;
+    padding: 24px 18px 18px;
+    border: 1px solid var(--line);
+    border-radius: 34px;
+    background:
+        radial-gradient(circle at top, rgba(212,175,55,0.16), transparent 38%),
+        linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.035));
+    backdrop-filter: blur(18px);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    left: 50%;
+    top: 108px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,175,55,0.13), transparent 64%);
+    filter: blur(7px);
+    pointer-events: none;
 }
 
 .header {
-    padding: 16px 10px 8px;
+    position: relative;
     text-align: center;
 }
 
 .kicker {
     margin-bottom: 8px;
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
+    font-size: 0.7rem;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--gold);
 }
@@ -77,141 +165,222 @@ body::before {
 h1 {
     margin: 0;
     font-family: 'Cinzel', serif;
-    font-size: clamp(2rem, 9vw, 3.2rem);
+    font-size: clamp(2.1rem, 10vw, 3.6rem);
     font-weight: 700;
-    line-height: 1;
+    line-height: 0.98;
 }
 
 .subtitle {
+    max-width: 380px;
     margin: 12px auto 0;
-    max-width: 360px;
-    font-size: 0.9rem;
-    line-height: 1.5;
+    font-size: 0.88rem;
+    line-height: 1.55;
     color: var(--muted);
 }
 
-.card {
-    margin-top: 18px;
-    padding: 18px;
-    border: 1px solid var(--line);
-    border-radius: 28px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.035));
-    backdrop-filter: blur(16px);
-    box-shadow:
-        0 24px 70px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.09);
-}
-
-.phase-name {
-    margin-top: 4px;
-    text-align: center;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--gold);
-}
-
-.moon-stage {
+.moon-area {
+    position: relative;
     display: grid;
     place-items: center;
-    margin: 16px 0 8px;
+    margin: 22px 0 10px;
+}
+
+.moon-ring {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 265px;
+    height: 265px;
+    max-width: 80vw;
+    max-height: 80vw;
+    border-radius: 50%;
+    border: 1px solid rgba(212,175,55,0.16);
+    background:
+        conic-gradient(from 180deg, rgba(212,175,55,0.0), rgba(212,175,55,0.25), rgba(156,183,255,0.10), rgba(212,175,55,0.0)),
+        radial-gradient(circle, rgba(255,255,255,0.025), transparent 70%);
+    box-shadow:
+        inset 0 0 42px rgba(255,255,255,0.026),
+        0 0 90px rgba(212,175,55,0.10);
 }
 
 #moonCanvas {
-    width: 220px;
-    height: 220px;
+    width: 230px;
+    height: 230px;
     max-width: 70vw;
     filter:
-        drop-shadow(0 0 24px rgba(255,255,255,0.13))
-        drop-shadow(0 0 62px rgba(212,175,55,0.08));
+        drop-shadow(0 0 22px rgba(255,255,255,0.18))
+        drop-shadow(0 0 70px rgba(212,175,55,0.16));
 }
 
-.main-number {
-    margin-top: 4px;
+.phase-badge {
+    position: absolute;
+    bottom: 5px;
+    padding: 8px 14px;
+    border: 1px solid rgba(212,175,55,0.28);
+    border-radius: 999px;
+    color: var(--gold2);
+    background: rgba(3,4,10,0.76);
+    backdrop-filter: blur(12px);
+    font-size: 0.78rem;
+    font-weight: 800;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+}
+
+.big-reading {
     text-align: center;
+    margin-top: 8px;
+}
+
+.big-number {
     font-family: 'Cinzel', serif;
-    font-size: 2.2rem;
+    font-size: clamp(2.6rem, 14vw, 4.4rem);
+    font-weight: 700;
+    line-height: 1;
     color: var(--text);
+    text-shadow: 0 0 30px rgba(212,175,55,0.18);
 }
 
-.main-label {
-    text-align: center;
-    margin-top: 2px;
+.big-label {
+    margin-top: 7px;
     font-size: 0.72rem;
-    text-transform: uppercase;
     letter-spacing: 0.18em;
+    text-transform: uppercase;
     color: var(--muted);
 }
 
-.stats {
+.phase-track {
+    margin: 18px auto 4px;
+    width: min(100%, 360px);
+}
+
+.track-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+    font-size: 0.64rem;
+    color: var(--muted2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.track {
+    position: relative;
+    height: 8px;
+    border-radius: 999px;
+    background:
+        linear-gradient(90deg,
+            #202020 0%,
+            #8b8b8b 25%,
+            #f4f4f4 50%,
+            #8b8b8b 75%,
+            #202020 100%);
+    overflow: visible;
+}
+
+#phaseMarker {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    width: 18px;
+    height: 18px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: var(--gold);
+    border: 3px solid #17130a;
+    box-shadow: 0 0 20px rgba(212,175,55,0.7);
+}
+
+.panel {
+    margin-top: 14px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    background: rgba(255,255,255,0.055);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.30);
+}
+
+.panel-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.panel-title h2 {
+    margin: 0;
+    font-size: 0.82rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold2);
+}
+
+.panel-title span {
+    font-size: 0.72rem;
+    color: var(--muted2);
+}
+
+.grid-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    margin-top: 18px;
 }
 
-.stat {
-    min-height: 84px;
-    padding: 13px 8px;
-    border-radius: 18px;
-    border: 1px solid rgba(212,175,55,0.23);
-    background: rgba(0,0,0,0.22);
-}
-
-.stat-label {
-    display: block;
-    font-size: 0.61rem;
-    letter-spacing: 0.11em;
-    text-transform: uppercase;
-    color: var(--muted);
-}
-
-.stat-value {
-    display: block;
-    margin-top: 8px;
-    font-weight: 700;
-    font-size: 0.98rem;
-    color: var(--gold);
-    word-break: break-word;
-}
-
-.astro-grid {
+.grid-2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
-    margin-top: 12px;
 }
 
-.astro-box {
-    padding: 14px 12px;
-    border-radius: 20px;
+.metric {
+    min-height: 82px;
+    padding: 13px 10px;
     border: 1px solid rgba(255,255,255,0.10);
-    background: rgba(255,255,255,0.045);
+    border-radius: 20px;
+    background:
+        radial-gradient(circle at top left, rgba(212,175,55,0.08), transparent 40%),
+        rgba(0,0,0,0.20);
 }
 
-.astro-label {
+.metric.gold {
+    border-color: rgba(212,175,55,0.25);
+    background:
+        radial-gradient(circle at top left, rgba(212,175,55,0.16), transparent 45%),
+        rgba(0,0,0,0.22);
+}
+
+.metric-label {
     display: block;
-    font-size: 0.62rem;
-    letter-spacing: 0.13em;
+    font-size: 0.61rem;
+    letter-spacing: 0.11em;
+    line-height: 1.35;
     text-transform: uppercase;
     color: var(--muted);
 }
 
-.astro-value {
+.metric-value {
     display: block;
     margin-top: 8px;
     font-size: 1rem;
-    font-weight: 700;
+    line-height: 1.18;
+    font-weight: 800;
     color: var(--text);
+    word-break: break-word;
+}
+
+.metric.gold .metric-value {
+    color: var(--gold2);
 }
 
 .next-phase {
     margin-top: 12px;
-    padding: 15px;
-    border-radius: 22px;
-    border: 1px solid rgba(212,175,55,0.25);
+    padding: 16px;
+    border-radius: 24px;
+    border: 1px solid rgba(212,175,55,0.30);
     background:
-        radial-gradient(circle at top left, rgba(212,175,55,0.15), transparent 35%),
-        rgba(0,0,0,0.24);
+        linear-gradient(135deg, rgba(212,175,55,0.16), rgba(156,183,255,0.06)),
+        rgba(0,0,0,0.22);
 }
 
 .next-phase small {
@@ -225,20 +394,21 @@ h1 {
 .next-phase strong {
     display: block;
     margin-top: 8px;
-    font-size: 1.05rem;
-    color: var(--gold);
+    font-size: 1.1rem;
+    color: var(--gold2);
 }
 
 .next-phase span {
     display: block;
-    margin-top: 4px;
-    font-size: 0.82rem;
+    margin-top: 5px;
+    font-size: 0.84rem;
+    line-height: 1.4;
     color: var(--text);
 }
 
 .details {
     display: grid;
-    gap: 10px;
+    gap: 8px;
     margin-top: 12px;
 }
 
@@ -246,9 +416,9 @@ h1 {
     display: flex;
     justify-content: space-between;
     gap: 14px;
-    padding: 12px 2px;
+    padding: 11px 2px;
     border-bottom: 1px solid rgba(255,255,255,0.08);
-    font-size: 0.83rem;
+    font-size: 0.82rem;
 }
 
 .detail-row span:first-child {
@@ -258,38 +428,14 @@ h1 {
 .detail-row span:last-child {
     color: var(--text);
     text-align: right;
+    font-weight: 600;
 }
 
 .note {
-    margin-top: 12px;
-    font-size: 0.76rem;
-    line-height: 1.5;
-    color: #8d8d8d;
-}
-
-.map-card {
-    margin-top: 16px;
-    overflow: hidden;
-    border-radius: 24px;
-    border: 1px solid var(--line);
-    background: #000;
-}
-
-.map-title {
-    padding: 13px 14px;
-    font-size: 0.76rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--gold);
-    background: rgba(255,255,255,0.045);
-}
-
-iframe {
-    display: block;
-    width: 100%;
-    height: 320px;
-    border: 0;
-    background: #000;
+    margin: 12px 2px 0;
+    font-size: 0.75rem;
+    line-height: 1.55;
+    color: #87847e;
 }
 
 .actions {
@@ -300,44 +446,93 @@ iframe {
 
 button {
     flex: 1;
-    border: 1px solid var(--gold-soft);
+    border: 1px solid var(--line-gold);
     border-radius: 999px;
-    padding: 12px 14px;
+    padding: 13px 14px;
     color: var(--text);
-    background: rgba(212,175,55,0.08);
+    background:
+        linear-gradient(180deg, rgba(212,175,55,0.16), rgba(212,175,55,0.06));
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.22);
 }
 
 button:active {
     transform: scale(0.98);
 }
 
-.author {
-    margin-top: 18px;
-    text-align: center;
-    font-size: 0.72rem;
-    color: #626262;
+.map-card {
+    margin-top: 14px;
+    overflow: hidden;
+    border-radius: 28px;
+    border: 1px solid var(--line);
+    background: #000;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
 }
 
-@media (max-width: 420px) {
-    .stats {
+.map-title {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 15px;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold2);
+    background: rgba(255,255,255,0.05);
+}
+
+.map-title span:last-child {
+    color: var(--muted2);
+}
+
+iframe {
+    display: block;
+    width: 100%;
+    height: 350px;
+    border: 0;
+    background: #000;
+}
+
+.author {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.72rem;
+    color: #66635d;
+}
+
+@media (max-width: 430px) {
+    .app {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .hero {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .grid-3 {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .astro-grid {
+    .grid-2 {
         grid-template-columns: 1fr;
     }
 
     iframe {
-        height: 280px;
+        height: 310px;
     }
 }
 
 @media (max-width: 340px) {
-    .stats {
+    .grid-3 {
         grid-template-columns: 1fr;
+    }
+
+    .actions {
+        flex-direction: column;
     }
 }
 </style>
@@ -347,80 +542,126 @@ button:active {
 
 <main class="app">
 
-    <section class="header">
-        <div class="kicker">Mistérios da Lua</div>
+    <div class="topbar">
+        <div class="brand">Ricardo Zibordi</div>
 
-        <h1>Fase Lunar</h1>
+        <div class="live-pill">
+            <span class="live-dot"></span>
+            <span id="val-live">ao vivo</span>
+        </div>
+    </div>
 
-        <p class="subtitle">
-            Uma leitura astronômica simples da Lua neste instante, com fase,
-            iluminação, constelação aparente e horários do céu.
-        </p>
+    <section class="hero">
+
+        <header class="header">
+            <div class="kicker">Mistérios da Lua</div>
+
+            <h1>Fase Lunar</h1>
+
+            <p class="subtitle">
+                A Lua agora: iluminação precisa, posição aparente, horários do Sol e da Lua,
+                próxima fase e mapa celeste com constelações.
+            </p>
+        </header>
+
+        <div class="moon-area">
+            <div class="moon-ring">
+                <canvas id="moonCanvas" width="700" height="700"></canvas>
+                <div id="fase-nome" class="phase-badge">Calculando...</div>
+            </div>
+        </div>
+
+        <div class="big-reading">
+            <div id="val-luz-grande" class="big-number">--,--%</div>
+            <div class="big-label">iluminação lunar neste instante</div>
+        </div>
+
+        <div class="phase-track">
+            <div class="track-labels">
+                <span>Nova</span>
+                <span>Cheia</span>
+                <span>Nova</span>
+            </div>
+
+            <div class="track">
+                <div id="phaseMarker"></div>
+            </div>
+        </div>
+
     </section>
 
-    <section class="card">
+    <section class="panel">
 
-        <div id="fase-nome" class="phase-name">Calculando...</div>
-
-        <div class="moon-stage">
-            <canvas id="moonCanvas" width="220" height="220"></canvas>
+        <div class="panel-title">
+            <h2>Precisão atual</h2>
+            <span id="val-data-curta">--</span>
         </div>
 
-        <div id="val-luz-grande" class="main-number">--%</div>
-        <div class="main-label">iluminação lunar agora</div>
+        <div class="grid-3">
 
-        <div class="stats">
-            <div class="stat">
-                <span class="stat-label">Hora local</span>
-                <span class="stat-value" id="val-hora">--:--</span>
+            <div class="metric gold">
+                <span class="metric-label">Hora local</span>
+                <span class="metric-value" id="val-hora">--:--:--</span>
             </div>
 
-            <div class="stat">
-                <span class="stat-label">Distância</span>
-                <span class="stat-value" id="val-dist">--</span>
+            <div class="metric gold">
+                <span class="metric-label">Iluminação</span>
+                <span class="metric-value" id="val-luz-card">--,--%</span>
             </div>
 
-            <div class="stat">
-                <span class="stat-label">Constelação</span>
-                <span class="stat-value" id="val-cons">--</span>
+            <div class="metric">
+                <span class="metric-label">Constelação</span>
+                <span class="metric-value" id="val-cons">--</span>
             </div>
 
-            <div class="stat">
-                <span class="stat-label">Altitude</span>
-                <span class="stat-value" id="val-alt">--</span>
+            <div class="metric">
+                <span class="metric-label">Distância</span>
+                <span class="metric-value" id="val-dist">--</span>
             </div>
 
-            <div class="stat">
-                <span class="stat-label">Azimute</span>
-                <span class="stat-value" id="val-az">--</span>
+            <div class="metric">
+                <span class="metric-label">Altitude</span>
+                <span class="metric-value" id="val-alt">--</span>
             </div>
 
-            <div class="stat">
-                <span class="stat-label">Luz</span>
-                <span class="stat-value" id="val-luz-card">--%</span>
+            <div class="metric">
+                <span class="metric-label">Azimute</span>
+                <span class="metric-value" id="val-az">--</span>
             </div>
+
         </div>
 
-        <div class="astro-grid">
-            <div class="astro-box">
-                <span class="astro-label">Nascer do Sol</span>
-                <span class="astro-value" id="val-sol-nascer">--:--</span>
+    </section>
+
+    <section class="panel">
+
+        <div class="panel-title">
+            <h2>Efemérides</h2>
+            <span id="val-local-curto">Campinas</span>
+        </div>
+
+        <div class="grid-2">
+
+            <div class="metric gold">
+                <span class="metric-label">Nascer do Sol</span>
+                <span class="metric-value" id="val-sol-nascer">--:--</span>
             </div>
 
-            <div class="astro-box">
-                <span class="astro-label">Nascer da Lua</span>
-                <span class="astro-value" id="val-lua-nascer">--:--</span>
+            <div class="metric gold">
+                <span class="metric-label">Pôr do Sol</span>
+                <span class="metric-value" id="val-sol-por">--:--</span>
             </div>
 
-            <div class="astro-box">
-                <span class="astro-label">Ocaso da Lua</span>
-                <span class="astro-value" id="val-lua-ocaso">--:--</span>
+            <div class="metric">
+                <span class="metric-label">Nascer da Lua</span>
+                <span class="metric-value" id="val-lua-nascer">--:--</span>
             </div>
 
-            <div class="astro-box">
-                <span class="astro-label">Local</span>
-                <span class="astro-value" id="val-local-curto">Campinas</span>
+            <div class="metric">
+                <span class="metric-label">Ocaso da Lua</span>
+                <span class="metric-value" id="val-lua-ocaso">--:--</span>
             </div>
+
         </div>
 
         <div class="next-phase">
@@ -430,6 +671,7 @@ button:active {
         </div>
 
         <div class="details">
+
             <div class="detail-row">
                 <span>Longitude eclíptica da Lua</span>
                 <span id="val-lon">--</span>
@@ -444,13 +686,14 @@ button:active {
                 <span>Atualizado em</span>
                 <span id="val-data">--</span>
             </div>
+
         </div>
 
         <p class="note">
-            A constelação é calculada por longitude eclíptica geocêntrica aproximada.
-            A próxima fase também é estimada por cálculo numérico; próximo das fronteiras
-            e dos instantes exatos, softwares astronômicos profissionais podem apresentar
-            pequena diferença.
+            A constelação da Lua é calculada por longitude eclíptica geocêntrica aproximada.
+            No mapa celeste abaixo, as linhas, fronteiras e nomes das constelações estão ativados.
+            Próximo das fronteiras entre constelações ou dos instantes exatos das fases,
+            pode haver pequena diferença em relação a efemérides astronômicas profissionais.
         </p>
 
         <div class="actions">
@@ -461,7 +704,11 @@ button:active {
     </section>
 
     <section class="map-card">
-        <div class="map-title">Mapa do céu ao vivo</div>
+        <div class="map-title">
+            <span>Mapa do céu</span>
+            <span>constelações</span>
+        </div>
+
         <iframe id="sky-map" src=""></iframe>
     </section>
 
@@ -472,8 +719,10 @@ button:active {
 <script>
 let lat = -22.9071;
 let lng = -47.0608;
+
 let localDescricao = "Campinas-SP padrão";
 let localCurto = "Campinas";
+let ultimoMapa = "";
 
 const DIA_MS = 86400000;
 const HORA_MS = 3600000;
@@ -496,13 +745,19 @@ function diasDesdeJ2000(data) {
     return data.getTime() / DIA_MS - 10957.5;
 }
 
-function formatarHora(data) {
+function formatarHora(data, segundos = false) {
     if (!data || isNaN(data.getTime())) return "Não ocorre hoje";
 
-    return data.toLocaleTimeString("pt-BR", {
+    const opcoes = {
         hour: "2-digit",
         minute: "2-digit"
-    });
+    };
+
+    if (segundos) {
+        opcoes.second = "2-digit";
+    }
+
+    return data.toLocaleTimeString("pt-BR", opcoes);
 }
 
 function formatarDataHora(data) {
@@ -515,6 +770,21 @@ function formatarDataHora(data) {
         hour: "2-digit",
         minute: "2-digit"
     });
+}
+
+function formatarDataCompleta(data) {
+    return data.toLocaleString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
+}
+
+function formatarPercentual(valor) {
+    return (valor * 100).toFixed(2).replace(".", ",") + "%";
 }
 
 function longitudeEclipticaLua(data) {
@@ -605,7 +875,9 @@ function proximaFasePrincipal(agora) {
     let candidatos = alvos.map(alvo => {
         let delta = alvo.valor - faseAtual;
 
-        if (delta <= 0) delta += 1;
+        if (delta <= 0) {
+            delta += 1;
+        }
 
         return {
             nome: alvo.nome,
@@ -623,6 +895,7 @@ function proximaFasePrincipal(agora) {
 
     let anteriorData = inicio;
     let anteriorFase = faseValor(anteriorData);
+
     let bracketInicio = null;
     let bracketFim = null;
 
@@ -669,19 +942,32 @@ function proximaFasePrincipal(agora) {
     };
 }
 
-function desenharLua(phase) {
+function desenharLua(phase, fraction) {
     const canvas = document.getElementById("moonCanvas");
     const ctx = canvas.getContext("2d");
 
-    const w = canvas.width;
-    const h = canvas.height;
-    const cx = w / 2;
-    const cy = h / 2;
-    const R = 100;
+    const S = 700;
 
-    ctx.clearRect(0, 0, w, h);
+    canvas.width = S;
+    canvas.height = S;
 
-    const img = ctx.createImageData(w, h);
+    const cx = S / 2;
+    const cy = S / 2;
+    const R = S * 0.42;
+
+    ctx.clearRect(0, 0, S, S);
+
+    const halo = ctx.createRadialGradient(cx, cy, R * 0.55, cx, cy, R * 1.35);
+    halo.addColorStop(0, "rgba(255,255,255,0.18)");
+    halo.addColorStop(0.45, "rgba(212,175,55,0.08)");
+    halo.addColorStop(1, "rgba(255,255,255,0)");
+
+    ctx.fillStyle = halo;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R * 1.35, 0, Math.PI * 2);
+    ctx.fill();
+
+    const img = ctx.createImageData(S, S);
     const pixels = img.data;
 
     const alpha = 2 * Math.PI * (phase - 0.5);
@@ -690,37 +976,91 @@ function desenharLua(phase) {
     const sx = Math.sin(alpha) * flip;
     const sz = Math.cos(alpha);
 
-    for (let y = 0; y < h; y++) {
-        for (let x = 0; x < w; x++) {
+    const manchas = [
+        { x: -0.22, y: -0.28, rx: 0.34, ry: 0.23, d: 34 },
+        { x:  0.18, y: -0.20, rx: 0.28, ry: 0.20, d: 26 },
+        { x:  0.26, y:  0.10, rx: 0.30, ry: 0.24, d: 30 },
+        { x: -0.20, y:  0.18, rx: 0.24, ry: 0.22, d: 22 },
+        { x:  0.04, y:  0.34, rx: 0.34, ry: 0.16, d: 20 },
+        { x: -0.38, y:  0.02, rx: 0.18, ry: 0.30, d: 18 }
+    ];
+
+    for (let y = 0; y < S; y++) {
+        for (let x = 0; x < S; x++) {
             const nx = (x - cx) / R;
             const ny = (y - cy) / R;
             const r2 = nx * nx + ny * ny;
-            const i = (y * w + x) * 4;
 
-            if (r2 <= 1) {
-                const nz = Math.sqrt(1 - r2);
-                const dot = nx * sx + nz * sz;
+            const i = (y * S + x) * 4;
 
-                const limb = 0.72 + 0.28 * nz;
-                let base;
-
-                if (dot > 0) {
-                    base = 155 + 85 * Math.min(dot, 1);
-                } else {
-                    base = 22 + 28 * nz;
-                }
-
-                base *= limb;
-
-                pixels[i]     = base;
-                pixels[i + 1] = base;
-                pixels[i + 2] = base * 1.02;
-                pixels[i + 3] = 255;
+            if (r2 > 1) {
+                pixels[i + 3] = 0;
+                continue;
             }
+
+            const nz = Math.sqrt(1 - r2);
+
+            const dot = nx * sx + nz * sz;
+
+            let luz = Math.max(0, dot);
+            luz = Math.pow(luz, 0.55);
+
+            const luzAmbiente = 0.055 + 0.045 * nz;
+            const intensidade = Math.min(1, luz + luzAmbiente);
+
+            const bordo = Math.pow(nz, 0.34);
+
+            const ruido =
+                Math.sin((nx * 17.3 + ny * 5.1) * 6.0) * 4 +
+                Math.sin((nx * 31.7 - ny * 14.2) * 3.2) * 3 +
+                Math.sin((nx * 68.1 + ny * 48.7)) * 2;
+
+            let base = 188 + ruido;
+
+            manchas.forEach(m => {
+                const dx = (nx - m.x) / m.rx;
+                const dy = (ny - m.y) / m.ry;
+                const g = Math.exp(-(dx * dx + dy * dy) * 1.8);
+                base -= g * m.d;
+            });
+
+            let r = base * 1.05;
+            let g = base * 1.02;
+            let b = base * 0.96;
+
+            r = r * intensidade * bordo;
+            g = g * intensidade * bordo;
+            b = b * intensidade * bordo;
+
+            if (dot < 0) {
+                const sombra = Math.min(1, Math.abs(dot));
+                r *= 0.34 - 0.12 * sombra;
+                g *= 0.36 - 0.12 * sombra;
+                b *= 0.43 - 0.12 * sombra;
+            }
+
+            const edge = Math.min(1, Math.max(0, (1 - r2) * 18));
+
+            pixels[i]     = Math.max(0, Math.min(255, r));
+            pixels[i + 1] = Math.max(0, Math.min(255, g));
+            pixels[i + 2] = Math.max(0, Math.min(255, b));
+            pixels[i + 3] = Math.round(255 * edge);
         }
     }
 
     ctx.putImageData(img, 0, 0);
+
+    const crateras = [
+        { x: -0.28, y: -0.34, r: 0.045, a: 0.20 },
+        { x:  0.20, y: -0.30, r: 0.035, a: 0.16 },
+        { x:  0.34, y: -0.05, r: 0.055, a: 0.15 },
+        { x: -0.18, y:  0.08, r: 0.060, a: 0.14 },
+        { x:  0.12, y:  0.24, r: 0.040, a: 0.13 },
+        { x: -0.36, y:  0.28, r: 0.030, a: 0.12 },
+        { x:  0.38, y:  0.32, r: 0.026, a: 0.10 },
+        { x: -0.04, y: -0.12, r: 0.030, a: 0.10 },
+        { x:  0.02, y:  0.42, r: 0.022, a: 0.09 }
+    ];
 
     ctx.save();
 
@@ -728,40 +1068,79 @@ function desenharLua(phase) {
     ctx.arc(cx, cy, R, 0, Math.PI * 2);
     ctx.clip();
 
-    const crateras = [
-        [78, 72, 10, 0.18],
-        [134, 64, 7, 0.14],
-        [150, 104, 13, 0.13],
-        [91, 124, 14, 0.12],
-        [127, 149, 8, 0.12],
-        [63, 147, 6, 0.11],
-        [166, 154, 5, 0.10]
-    ];
-
     crateras.forEach(c => {
-        const [x, y, r, a] = c;
+        const x = cx + c.x * R;
+        const y = cy + c.y * R;
+        const rr = c.r * R;
 
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,0,0,${a})`;
-        ctx.fill();
+        const grad = ctx.createRadialGradient(
+            x - rr * 0.25,
+            y - rr * 0.25,
+            rr * 0.1,
+            x,
+            y,
+            rr
+        );
 
+        grad.addColorStop(0, `rgba(255,255,255,${c.a * 0.75})`);
+        grad.addColorStop(0.48, `rgba(255,255,255,${c.a * 0.18})`);
+        grad.addColorStop(0.55, `rgba(0,0,0,${c.a * 0.55})`);
+        grad.addColorStop(1, `rgba(0,0,0,0)`);
+
+        ctx.fillStyle = grad;
         ctx.beginPath();
-        ctx.arc(x - r * 0.25, y - r * 0.25, r * 0.55, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${a * 0.45})`;
+        ctx.arc(x, y, rr, 0, Math.PI * 2);
         ctx.fill();
     });
 
     ctx.restore();
 
+    ctx.save();
+
     ctx.beginPath();
     ctx.arc(cx, cy, R, 0, Math.PI * 2);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "rgba(255,255,255,0.18)";
+    ctx.clip();
+
+    const brilho = ctx.createRadialGradient(
+        cx - sx * R * 0.55,
+        cy,
+        R * 0.25,
+        cx - sx * R * 0.55,
+        cy,
+        R * 1.15
+    );
+
+    brilho.addColorStop(0, "rgba(255,255,255,0.16)");
+    brilho.addColorStop(0.45, "rgba(255,255,255,0.04)");
+    brilho.addColorStop(1, "rgba(255,255,255,0)");
+
+    ctx.fillStyle = brilho;
+    ctx.fillRect(0, 0, S, S);
+
+    ctx.restore();
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "rgba(255,255,255,0.20)";
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, R * 1.01, 0, Math.PI * 2);
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = "rgba(212,175,55,0.18)";
     ctx.stroke();
 }
 
 function atualizarMapa() {
+    const chaveMapa = `${lat.toFixed(4)},${lng.toFixed(4)}`;
+
+    if (chaveMapa === ultimoMapa) {
+        return;
+    }
+
+    ultimoMapa = chaveMapa;
+
     const mapa = document.getElementById("sky-map");
 
     mapa.src =
@@ -769,13 +1148,33 @@ function atualizarMapa() {
         `?longitude=${lng}` +
         `&latitude=${lat}` +
         `&live=true` +
+        `&projection=stereo` +
+
+        `&bgcolor=050608` +
+        `&color=e8e8e8` +
+        `&gradient=false` +
+
+        `&constellations=true` +
+        `&constellationlabels=true` +
+        `&constellationboundaries=true` +
+        `&constellationwidth=1` +
+        `&constellationboundarieswidth=1` +
+
         `&ecliptic=true` +
         `&equator=true` +
-        `&showstarlabels=true` +
+        `&meridian=true` +
+
         `&showplanets=true` +
-        `&projection=stereo` +
-        `&bgcolor=050608` +
-        `&color=e8e8e8`;
+        `&showplanetlabels=true` +
+        `&showstars=true` +
+        `&showstarlabels=false` +
+
+        `&cardinalpoints=true` +
+        `&showdate=false` +
+        `&showposition=false` +
+
+        `&mouse=true` +
+        `&keyboard=true`;
 }
 
 function atualizar() {
@@ -800,14 +1199,15 @@ function atualizar() {
     const lonLua = longitudeEclipticaLua(agora);
     const constelacao = constelacaoZodiacal(lonLua);
 
-    const iluminacaoTexto = Math.round(fracao * 100) + "%";
+    const iluminacaoTexto = formatarPercentual(fracao);
 
     document.getElementById("fase-nome").textContent = nomeFase(fase, fracao);
 
     document.getElementById("val-luz-grande").textContent = iluminacaoTexto;
     document.getElementById("val-luz-card").textContent = iluminacaoTexto;
 
-    document.getElementById("val-hora").textContent = formatarHora(agora);
+    document.getElementById("val-hora").textContent = formatarHora(agora, true);
+    document.getElementById("val-live").textContent = formatarHora(agora, false);
 
     document.getElementById("val-dist").textContent =
         Math.round(pos.distance / 1000) + " mil km";
@@ -822,6 +1222,9 @@ function atualizar() {
 
     document.getElementById("val-sol-nascer").textContent =
         formatarHora(temposSol.sunrise);
+
+    document.getElementById("val-sol-por").textContent =
+        formatarHora(temposSol.sunset);
 
     document.getElementById("val-lua-nascer").textContent =
         temposLua.alwaysUp ? "Sempre visível" :
@@ -842,16 +1245,17 @@ function atualizar() {
     document.getElementById("val-local").textContent = localDescricao;
     document.getElementById("val-local-curto").textContent = localCurto;
 
-    document.getElementById("val-data").textContent =
-        agora.toLocaleString("pt-BR", {
+    document.getElementById("val-data").textContent = formatarDataCompleta(agora);
+
+    document.getElementById("val-data-curta").textContent =
+        agora.toLocaleDateString("pt-BR", {
             day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
+            month: "short"
         });
 
-    desenharLua(fase);
+    document.getElementById("phaseMarker").style.left = `${fase * 100}%`;
+
+    desenharLua(fase, fracao);
     atualizarMapa();
 }
 
@@ -871,6 +1275,7 @@ function pedirLocalizacao() {
             localDescricao = `${lat.toFixed(3)}, ${lng.toFixed(3)}`;
             localCurto = "Meu local";
 
+            ultimoMapa = "";
             atualizar();
         },
         () => {
@@ -888,7 +1293,7 @@ function pedirLocalizacao() {
 
 atualizar();
 
-setInterval(atualizar, 60000);
+setInterval(atualizar, 10000);
 </script>
 
 </body>
