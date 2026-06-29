@@ -23,7 +23,8 @@
 
         .container {
             max-width: 600px;
-            padding: 40px 20px;
+            width: 90%;
+            padding: 40px 0;
             text-align: center;
             z-index: 10;
         }
@@ -36,36 +37,48 @@
             margin-bottom: 5px;
         }
 
+        .date-container {
+            margin-bottom: 30px;
+        }
+
         .date {
             font-size: 1rem;
             color: #a0a0a0;
-            margin-bottom: 30px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .time {
+            font-size: 1.2rem;
+            color: #d4af37;
+            font-weight: 300;
+            letter-spacing: 2px;
+            font-family: 'Cinzel', serif;
         }
 
         .phase-title {
             font-size: 1.8rem;
             color: #d4af37;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             letter-spacing: 2px;
             text-transform: uppercase;
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+            min-height: 2.5rem;
         }
 
-        /* Representação da Lua Cheia */
+        /* Representação Dinâmica da Lua */
         .moon-container {
             margin: 0 auto 30px auto;
-            width: 180px;
-            height: 180px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
-            background: #fdfdfd;
-            box-shadow: 
-                inset -20px 0 35px rgba(0,0,0,0.5), 
-                0 0 40px rgba(255, 255, 255, 0.5),
-                0 0 100px rgba(255, 255, 255, 0.2);
             position: relative;
+            background: #fdfdfd;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            transition: all 1s ease;
         }
         
         .moon-craters {
@@ -73,54 +86,88 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background-image: radial-gradient(circle at 30% 30%, rgba(0,0,0,0.1) 0%, transparent 20%),
-                              radial-gradient(circle at 70% 60%, rgba(0,0,0,0.15) 0%, transparent 30%),
-                              radial-gradient(circle at 40% 80%, rgba(0,0,0,0.1) 0%, transparent 15%);
+            background-image: radial-gradient(circle at 30% 30%, rgba(0,0,0,0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 70% 60%, rgba(0,0,0,0.2) 0%, transparent 30%),
+                              radial-gradient(circle at 40% 80%, rgba(0,0,0,0.15) 0%, transparent 15%);
+            z-index: 2;
         }
 
-        /* Novos painéis de estatísticas (Luminosidade e Distância) */
+        .moon-shadow {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%;
+            z-index: 3;
+            transition: background 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        /* Painéis de Estatísticas - Atualizado para 3 colunas */
         .stats-container {
             display: flex;
             justify-content: space-between;
             width: 100%;
-            margin-bottom: 30px;
-            gap: 15px;
+            margin-bottom: 20px;
+            gap: 10px;
         }
 
         .stat-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 12px;
-            padding: 15px 10px;
+            padding: 15px 5px;
             flex: 1;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .stat-value {
             display: block;
-            font-size: 1.4rem;
+            font-size: 1.15rem; /* Ajustado para caber o nome da constelação */
             color: #d4af37;
             font-weight: 700;
             margin-bottom: 5px;
             font-family: 'Cinzel', serif;
-            text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
         }
 
         .stat-label {
             display: block;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             color: #b0b0b0;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
+        /* Grade de Eventos Celestes */
+        .celestial-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .celestial-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 5px;
+            text-align: center;
+        }
+
+        .celestial-icon {
+            font-size: 1.4rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Cartões de Informação */
         .card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
-            padding: 25px;
+            padding: 20px;
             margin-bottom: 20px;
             backdrop-filter: blur(10px);
             text-align: left;
@@ -129,7 +176,7 @@
 
         .card h2 {
             font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #fff;
             margin-top: 0;
             border-bottom: 1px solid rgba(255,255,255,0.15);
@@ -138,13 +185,10 @@
         }
 
         .card p {
-            line-height: 1.7;
+            line-height: 1.6;
             font-size: 0.95rem;
-            margin-bottom: 15px;
-        }
-
-        .card p:last-child {
             margin-bottom: 0;
+            color: #dcdcdc;
         }
 
         .highlight {
@@ -153,14 +197,14 @@
         }
 
         .author {
-            margin-top: 50px;
+            margin-top: 40px;
             font-size: 0.85rem;
             color: #777;
             letter-spacing: 1.5px;
             text-transform: uppercase;
         }
 
-        /* Fundo estrelado simulado por CSS */
+        /* Fundo Estrelado */
         .stars {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -173,47 +217,293 @@
                 radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
             background-repeat: repeat;
             background-size: 200px 200px;
-            opacity: 0.4;
+            opacity: 0.5;
+            animation: twinkle 100s linear infinite;
+        }
+
+        @keyframes twinkle {
+            from { background-position: 0 0; }
+            to { background-position: -1000px 500px; }
         }
     </style>
+    <!-- Importando a Biblioteca SunCalc -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.8.0/suncalc.min.js"></script>
 </head>
 <body>
     <div class="stars"></div>
     <div class="container">
         <h1>Fase Lunar</h1>
-        <div class="date">29 de Junho de 2026</div>
+        <div class="date-container">
+            <div class="date" id="data-atual">Carregando...</div>
+            <div class="time" id="hora-atual">--:--:--</div>
+        </div>
 
-        <div class="phase-title">Lua Cheia</div>
+        <div class="phase-title" id="fase-titulo">...</div>
         
-        <div class="moon-container">
+        <div class="moon-container" id="moon-base">
             <div class="moon-craters"></div>
+            <div class="moon-shadow" id="moon-shadow"></div>
         </div>
 
         <div class="stats-container">
             <div class="stat-box">
-                <span class="stat-value">100%</span>
-                <span class="stat-label">Luminosidade</span>
+                <span class="stat-value" id="luminosidade">--%</span>
+                <span class="stat-label">Luz</span>
             </div>
             <div class="stat-box">
-                <span class="stat-value">405.254 km</span>
-                <span class="stat-label">Distância da Terra</span>
+                <span class="stat-value" id="distancia">--</span>
+                <span class="stat-label">Distância</span>
             </div>
+            <!-- Novo Painel de Constelação -->
+            <div class="stat-box">
+                <span class="stat-value" id="constelacao">--</span>
+                <span class="stat-label">Constelação</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Eventos Celestes Hoje</h2>
+            <div class="celestial-grid">
+                <div class="celestial-item">
+                    <span class="celestial-icon">🌅</span>
+                    <span class="stat-label">Nascer do Sol</span>
+                    <span class="stat-value" style="font-size: 1.1rem; margin-top:5px;" id="sol-nascer">--:--</span>
+                </div>
+                <div class="celestial-item">
+                    <span class="celestial-icon">🌇</span>
+                    <span class="stat-label">Pôr do Sol</span>
+                    <span class="stat-value" style="font-size: 1.1rem; margin-top:5px;" id="sol-por">--:--</span>
+                </div>
+                <div class="celestial-item">
+                    <span class="celestial-icon">🌒</span>
+                    <span class="stat-label">Nascer da Lua</span>
+                    <span class="stat-value" style="font-size: 1.1rem; margin-top:5px;" id="lua-nascer">--:--</span>
+                </div>
+                <div class="celestial-item">
+                    <span class="celestial-icon">🌌</span>
+                    <span class="stat-label">Pôr da Lua</span>
+                    <span class="stat-value" style="font-size: 1.1rem; margin-top:5px;" id="lua-por">--:--</span>
+                </div>
+            </div>
+            <p style="font-size: 0.75rem; color: #777; margin-top: 15px; text-align: center;" id="aviso-localizacao">Baseado em coordenadas padrão (Campinas, SP). Permita o acesso à localização para maior precisão.</p>
         </div>
 
         <div class="card">
             <h2>Próxima Mudança</h2>
-            <p>A Lua começará a perder sua iluminação e entrará na fase <span class="highlight">Quarto Minguante</span> no dia <strong>7 de Julho de 2026</strong>.</p>
+            <p>A Lua mudará para <span class="highlight" id="proxima-fase-nome">...</span> no dia <strong id="proxima-fase-data">...</strong> às <strong class="highlight" id="proxima-fase-hora">...</strong>.</p>
         </div>
 
         <div class="card">
-            <h2>Curiosidades de Hoje</h2>
-            <p><strong>A Lua de Morango:</strong> A Lua Cheia que ocorre em junho é tradicionalmente chamada de "Lua de Morango". Este nome vem das antigas tribos norte-americanas, que utilizavam essa fase lunar como um sinal de que os morangos selvagens estavam prontos para a colheita.</p>
-            <p><strong>A Microlua de 2026:</strong> A Lua cheia de hoje ocorre a cerca de 405.254 km, muito próxima ao seu apogeu (o ponto mais distante da Terra em sua órbita). Por causa dessa distância, ela é considerada uma "Microlua", parecendo ligeiramente menor e com um brilho um pouco mais suave no céu noturno em comparação a uma Superlua.</p>
+            <h2 id="curiosidade-titulo">Curiosidades Astronômicas</h2>
+            <p id="curiosidade-texto">Calculando dados estelares...</p>
         </div>
 
         <div class="author">
             Desenvolvimento: Ricardo Zibordi
         </div>
     </div>
+
+    <script>
+        // Coordenadas base (Campinas, SP)
+        let lat = -22.9071;
+        let lng = -47.0608;
+
+        // Formatação de hora
+        function formatarHora(dataObjeto) {
+            if (!dataObjeto || isNaN(dataObjeto.getTime())) return "--:--";
+            return dataObjeto.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Calcula posição do Sol e Lua na sua localização
+        function calcularEventosCelestes() {
+            const dataAtual = new Date();
+            const sunTimes = SunCalc.getTimes(dataAtual, lat, lng);
+            document.getElementById('sol-nascer').textContent = formatarHora(sunTimes.sunrise);
+            document.getElementById('sol-por').textContent = formatarHora(sunTimes.sunset);
+            
+            const moonTimes = SunCalc.getMoonTimes(dataAtual, lat, lng);
+            document.getElementById('lua-nascer').textContent = moonTimes.rise ? formatarHora(moonTimes.rise) : "--:--";
+            document.getElementById('lua-por').textContent = moonTimes.set ? formatarHora(moonTimes.set) : "--:--";
+        }
+
+        // Tenta obter localização real do dispositivo
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (posicao) => {
+                    lat = posicao.coords.latitude;
+                    lng = posicao.coords.longitude;
+                    document.getElementById('aviso-localizacao').textContent = "Horários calculados com base na sua localização atual.";
+                    calcularEventosCelestes();
+                },
+                (erro) => { console.log("Usando localização padrão (Campinas)."); }
+            );
+        }
+
+        // Algoritmo matemático para prever a Constelação Astronômica (incluindo Ofiúco)
+        function calcularConstelacaoAstronomica(dataAtual, faseLua) {
+            const start = new Date(dataAtual.getFullYear(), 0, 0);
+            const diff = dataAtual - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const dayOfYear = Math.floor(diff / oneDay);
+            
+            // Posição eclíptica do sol (equinócio de primavera próximo ao dia 79)
+            let L_sun = ((dayOfYear - 79) / 365.24) * 360;
+            if (L_sun < 0) L_sun += 360;
+            
+            // Posição eclíptica da lua baseada no sol + ângulo da fase
+            let L_moon = (L_sun + (faseLua * 360)) % 360;
+            if (L_moon < 0) L_moon += 360;
+            
+            // Mapeamento das fronteiras astronômicas reais
+            if (L_moon >= 351 || L_moon < 29) return "Peixes ♓";
+            if (L_moon >= 29 && L_moon < 53) return "Áries ♈";
+            if (L_moon >= 53 && L_moon < 90) return "Touro ♉";
+            if (L_moon >= 90 && L_moon < 118) return "Gêmeos ♊";
+            if (L_moon >= 118 && L_moon < 138) return "Câncer ♋";
+            if (L_moon >= 138 && L_moon < 174) return "Leão ♌";
+            if (L_moon >= 174 && L_moon < 218) return "Virgem ♍";
+            if (L_moon >= 218 && L_moon < 241) return "Libra ♎";
+            if (L_moon >= 241 && L_moon < 248) return "Escorpião ♏";
+            if (L_moon >= 248 && L_moon < 266) return "Ofiúco ⛎";
+            if (L_moon >= 266 && L_moon < 299) return "Sagitário ♐";
+            if (L_moon >= 299 && L_moon < 327) return "Capricórnio ♑";
+            if (L_moon >= 327 && L_moon < 351) return "Aquário ♒";
+            
+            return "--";
+        }
+
+        // Calcula horário exato da próxima fase lunar
+        function encontrarProximaFase(dataBase) {
+            let inicio = new Date(dataBase.getTime());
+            let faseInicial = SunCalc.getMoonIllumination(inicio).phase;
+            
+            let alvo, nome;
+            if (faseInicial < 0.25) { alvo = 0.25; nome = "Quarto Crescente"; }
+            else if (faseInicial < 0.5) { alvo = 0.5; nome = "Lua Cheia"; }
+            else if (faseInicial < 0.75) { alvo = 0.75; nome = "Quarto Minguante"; }
+            else { alvo = 0.0; nome = "Lua Nova"; }
+
+            let tempDate = new Date(inicio.getTime());
+            let faseAnterior = faseInicial;
+
+            for (let i = 0; i < 800; i++) {
+                tempDate.setHours(tempDate.getHours() + 1);
+                let faseAtual = SunCalc.getMoonIllumination(tempDate).phase;
+                
+                let cruzou = false;
+                if (alvo === 0.0) { 
+                    if (faseAnterior > 0.9 && faseAtual < 0.1) cruzou = true;
+                } else {
+                    if (faseAnterior < alvo && faseAtual >= alvo) cruzou = true;
+                }
+
+                if (cruzou) {
+                    tempDate.setHours(tempDate.getHours() - 1);
+                    for (let m = 0; m < 60; m++) {
+                        tempDate.setMinutes(tempDate.getMinutes() + 1);
+                        let faseMinuto = SunCalc.getMoonIllumination(tempDate).phase;
+                        let faseMinutoAnterior = SunCalc.getMoonIllumination(new Date(tempDate.getTime() - 60000)).phase;
+                        
+                        let cruzouMinuto = false;
+                        if (alvo === 0.0) {
+                            if (faseMinutoAnterior > 0.9 && faseMinuto < 0.1) cruzouMinuto = true;
+                        } else {
+                            if (faseMinutoAnterior < alvo && faseMinuto >= alvo) cruzouMinuto = true;
+                        }
+                        
+                        if(cruzouMinuto) return { dataExata: tempDate, nomeFase: nome };
+                    }
+                }
+                faseAnterior = faseAtual;
+            }
+            return { dataExata: tempDate, nomeFase: nome };
+        }
+
+        // Atualiza a interface a cada segundo
+        function atualizarDadosLunares() {
+            const dataAtual = new Date();
+            
+            document.getElementById("data-atual").textContent = dataAtual.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+            document.getElementById("hora-atual").textContent = dataAtual.toLocaleTimeString('pt-BR');
+
+            const iluminacao = SunCalc.getMoonIllumination(dataAtual);
+            const fase = iluminacao.phase;
+            
+            const posicaoLua = SunCalc.getMoonPosition(dataAtual, lat, lng);
+            const distanciaKm = Math.round(posicaoLua.distance);
+
+            // Interface dos 3 painéis
+            document.getElementById("luminosidade").textContent = (iluminacao.fraction * 100).toFixed(2) + "%";
+            document.getElementById("distancia").textContent = (distanciaKm / 1000).toFixed(0) + "k km"; // Formatado para caber no celular
+            document.getElementById("constelacao").textContent = calcularConstelacaoAstronomica(dataAtual, fase);
+
+            let nomeFase = "";
+            const moonShadow = document.getElementById("moon-shadow");
+            const moonBase = document.getElementById("moon-base");
+
+            if (fase < 0.03 || fase > 0.97) {
+                nomeFase = "Lua Nova";
+                moonBase.style.background = "#222"; 
+                moonBase.style.boxShadow = "none";
+            } else if (fase < 0.22) {
+                nomeFase = "Crescente Côncava";
+                moonShadow.style.boxShadow = "inset -120px 0 0 0 #111a24"; 
+            } else if (fase < 0.28) {
+                nomeFase = "Quarto Crescente";
+                moonShadow.style.background = "linear-gradient(90deg, #111a24 50%, transparent 50%)";
+            } else if (fase < 0.47) {
+                nomeFase = "Crescente Gibosa";
+                moonShadow.style.boxShadow = "inset 40px 0 0 0 #111a24"; 
+            } else if (fase < 0.53) {
+                nomeFase = "Lua Cheia";
+                moonShadow.style.boxShadow = "none"; 
+            } else if (fase < 0.72) {
+                nomeFase = "Minguante Gibosa";
+                moonShadow.style.boxShadow = "inset -40px 0 0 0 #111a24"; 
+            } else if (fase < 0.78) {
+                nomeFase = "Quarto Minguante";
+                moonShadow.style.background = "linear-gradient(-90deg, #111a24 50%, transparent 50%)";
+            } else {
+                nomeFase = "Minguante Côncava";
+                moonShadow.style.boxShadow = "inset 120px 0 0 0 #111a24"; 
+            }
+
+            document.getElementById("fase-titulo").textContent = nomeFase;
+
+            const tituloCuriosidade = document.getElementById("curiosidade-titulo");
+            const textoCuriosidade = document.getElementById("curiosidade-texto");
+
+            if (distanciaKm > 404000) {
+                tituloCuriosidade.textContent = "Apogeu Lunar";
+                textoCuriosidade.textContent = `Neste exato momento, a Lua está a ${distanciaKm.toLocaleString('pt-BR')} km da Terra. Como está perto de seu ponto mais distante, aparenta estar menor no céu.`;
+            } else if (distanciaKm < 365000) {
+                tituloCuriosidade.textContent = "Perigeu Lunar";
+                textoCuriosidade.textContent = `A Lua está muito próxima da Terra hoje (${distanciaKm.toLocaleString('pt-BR')} km). Isso cria o fenômeno que popularmente chamamos de "Superlua"!`;
+            } else if (iluminacao.fraction > 0.98) {
+                tituloCuriosidade.textContent = "Forças das Marés";
+                textoCuriosidade.textContent = "Graças ao alinhamento, a gravidade combinada do Sol e da Lua provoca as 'marés de sizígia', que são marés excepcionalmente altas e baixas.";
+            } else if (iluminacao.fraction < 0.02) {
+                tituloCuriosidade.textContent = "Céu Profundo";
+                textoCuriosidade.textContent = "Com a luminosidade mínima, o céu noturno está perfeitamente escuro para observar galáxias e estrelas, livre do ofuscamento lunar.";
+            } else {
+                tituloCuriosidade.textContent = "As 13 Constelações";
+                textoCuriosidade.textContent = "Na astronomia real, a eclíptica cruza 13 constelações (e não 12 signos). É por isso que em certos períodos do ano a Lua passa por Ofiúco, o portador da serpente.";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            calcularEventosCelestes(); 
+            atualizarDadosLunares();
+            setInterval(atualizarDadosLunares, 1000); 
+
+            const proximaFaseInfo = encontrarProximaFase(new Date());
+            document.getElementById("proxima-fase-nome").textContent = proximaFaseInfo.nomeFase;
+            document.getElementById("proxima-fase-data").textContent = proximaFaseInfo.dataExata.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long' });
+            
+            const horasStr = proximaFaseInfo.dataExata.getHours().toString().padStart(2, '0');
+            const minutosStr = proximaFaseInfo.dataExata.getMinutes().toString().padStart(2, '0');
+            document.getElementById("proxima-fase-hora").textContent = `${horasStr}h${minutosStr}`;
+        });
+    </script>
 </body>
 </html>
